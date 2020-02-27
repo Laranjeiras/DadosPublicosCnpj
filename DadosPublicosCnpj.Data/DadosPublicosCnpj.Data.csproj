@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Alexandre Laranjeiras</Authors>
+    <Description>laranja22@hotmail.com</Description>
+    <RepositoryUrl>https://github.com/Laranjeiras/DadosPublicosCnpj</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

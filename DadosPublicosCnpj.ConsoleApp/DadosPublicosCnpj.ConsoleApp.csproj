@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Alexandre Laranjeiras</Authors>
+    <Description>laranja22@hotmail.com</Description>
+    <PackageProjectUrl>https://github.com/Laranjeiras/DadosPublicosCnpj</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Laranjeiras/DadosPublicosCnpj</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
