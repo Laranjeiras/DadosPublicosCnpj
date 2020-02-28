@@ -2,7 +2,7 @@
 using DadosPublicosCnpj.Data.Tipos;
 using DadosPublicosCnpj.Data.Utilidades;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DadosPublicosCnpj.Data.Servicos
@@ -11,6 +11,7 @@ namespace DadosPublicosCnpj.Data.Servicos
     {
         int _totalErros = 0;
         int _idRegistro = 0;
+        int _arquivosProcessados = 0;
         string _arquivo;
         readonly string _diretorioTrabalho;
         readonly string _arquivoLog;
@@ -25,30 +26,30 @@ namespace DadosPublicosCnpj.Data.Servicos
 
         public void Executar()
         {
-            var sw = new Stopwatch();
-            var before2 = GC.CollectionCount(2);
-            var before1 = GC.CollectionCount(1);
-            var before0 = GC.CollectionCount(0);
+            var metricas = new Metricas();
 
             DirectoryInfo dirInfo = new DirectoryInfo(_diretorioTrabalho);
 
             var listaNomeArquivos = FileHelpers.BuscarArquivosCompativeis(dirInfo);
 
-            sw.Start();
+            metricas.Inicializar();
+            ProcessarArquivos(listaNomeArquivos);
+            metricas.Finalizar();
+            SalvarArquivosMetricas(metricas);
+            Console.WriteLine($"Fim da importação");
+            Console.WriteLine($"Total de Registros: {_idRegistro}");
+        }
+
+        public void ProcessarArquivos(IList<string> listaNomeArquivos)
+        {
             foreach (var nomeArquivo in listaNomeArquivos)
             {
+                Console.WriteLine($"Aguarde... importando registros do arquivo {nomeArquivo}");
                 _arquivo = nomeArquivo;
                 TratarArquivo(nomeArquivo);
+                _arquivosProcessados++;
+                return;
             }
-            sw.Stop();
-
-            Console.WriteLine($"Total de Registros: {_idRegistro}");
-
-            Console.WriteLine($"Tempo total: {sw.ElapsedMilliseconds}ms");
-            Console.WriteLine($"GC Gen #2  : {GC.CollectionCount(2) - before2}");
-            Console.WriteLine($"GC Gen #1  : {GC.CollectionCount(1) - before1}");
-            Console.WriteLine($"GC Gen #0  : {GC.CollectionCount(0) - before0}");
-            Console.WriteLine("Done!");
         }
         
         private void TratarArquivo(string nomeArquivo)
@@ -62,6 +63,7 @@ namespace DadosPublicosCnpj.Data.Servicos
                 if (_idRegistro < _registroInicial)
                     continue;
 
+                //Console.WriteLine(_idRegistro);
                 var tipoRegistro = linha.Substring(0, 1);
 
                 switch (tipoRegistro)
@@ -227,6 +229,21 @@ namespace DadosPublicosCnpj.Data.Servicos
                 w.WriteLine("-------------------------------");
             }
             _totalErros++;
+        }
+
+        public void SalvarArquivosMetricas(Metricas metricas)
+        {
+            var arquivoMetricas = $@"{_diretorioTrabalho}\Metricas.log";
+            using (StreamWriter w = File.AppendText(arquivoMetricas))
+            {
+                w.WriteLine($"\r\nLog Métricas: {DateTime.Now}");
+                w.WriteLine($"Registros processados: {_idRegistro} em {_arquivosProcessados} arquivo(s)");
+                w.WriteLine($"Tempo total: { metricas.Sw.ElapsedMilliseconds}ms");
+                w.WriteLine($"GC Gen #2  : {GC.CollectionCount(2) - metricas.Before2}");
+                w.WriteLine($"GC Gen #1  : {GC.CollectionCount(1) - metricas.Before1}");
+                w.WriteLine($"GC Gen #0  : {GC.CollectionCount(0) - metricas.Before0}");               
+                w.WriteLine("-------------------------------");
+            }
         }
     }
 }

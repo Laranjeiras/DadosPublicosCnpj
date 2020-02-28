@@ -8,7 +8,7 @@ namespace DadosPublicosCnpj.ConsoleApp
         static void Main(string[] args)
         {
             var registroInicialImportacao = 0;
-            var servico = new ImportarArquivosCnpj(@"E:\DadosPublicos CNPJ", @"E:\DadosPublicos CNPJ\Log.txt", registroInicialImportacao);
+            var servico = new ImportarArquivosCnpj(@"E:\DadosPublicos CNPJ", @"E:\DadosPublicos CNPJ\ErrosImportacao.log", registroInicialImportacao);
             servico.Executar();
             Console.ReadKey();
         }
