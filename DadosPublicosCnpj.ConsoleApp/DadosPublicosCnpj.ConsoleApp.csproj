@@ -9,4 +9,8 @@
     <RepositoryUrl>https://github.com/Laranjeiras/DadosPublicosCnpj</RepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DadosPublicosCnpj.Data\DadosPublicosCnpj.Data.csproj" />
+  </ItemGroup>
+
 </Project>
