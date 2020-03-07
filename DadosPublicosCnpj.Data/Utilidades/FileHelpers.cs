@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DadosPublicosCnpj.Data.Utilidades
@@ -7,12 +8,12 @@ namespace DadosPublicosCnpj.Data.Utilidades
     public class FileHelpers
     {
         private static Regex regex = new Regex(@"^[.]{1}[L]{1}\d{5}");
-        
 
         public static IList<string> BuscarArquivosCompativeis(DirectoryInfo dir)
         {
             var listaNomeArquivos = new List<string>();
-            foreach (FileInfo file in dir.GetFiles())
+            var files = dir.GetFiles().OrderBy(x => x.FullName);
+            foreach (FileInfo file in files)
             {
                 if (file.FullName.Length < 6)
                     continue;

@@ -13,13 +13,13 @@ namespace DadosPublicosCnpj.Data.Utilidades
         public Metricas()
         {
             Sw = new Stopwatch();
-            Before2 = GC.CollectionCount(2);
-            Before1 = GC.CollectionCount(1);
-            Before0 = GC.CollectionCount(0);
         }
 
         public void Inicializar()
         {
+            Before2 = GC.CollectionCount(2);
+            Before1 = GC.CollectionCount(1);
+            Before0 = GC.CollectionCount(0);
             Sw.Start();
         }
 

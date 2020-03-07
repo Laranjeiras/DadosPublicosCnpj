@@ -8,7 +8,7 @@ namespace DadosPublicosCnpj.Data.Modelos
 		public string NomeArquivo
 		{
 			get { return _nomeArquivo; }
-			set { _nomeArquivo = StringHelpers.TratarString(value); }
+			set { _nomeArquivo = ParseHelpers.TratarString(value); }
 		}
 
 		public int DataGravacao { get; set; }
