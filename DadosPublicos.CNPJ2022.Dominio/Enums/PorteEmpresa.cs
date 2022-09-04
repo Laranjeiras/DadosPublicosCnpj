@@ -13,19 +13,4 @@ namespace DadosPublicos.CNPJ2022.Dominio.Enums
         [Description("Demais")]
         Demais = 5
     }
-
-    public enum IdentificadorEstabelecimento
-    {
-        Matriz = 1,
-        Filial = 2
-    }
-
-    public enum SituacaoCadastral
-    {
-        Nula = 1,
-        Ativa = 2,
-        Suspensa = 3,
-        Inapta = 4,
-        Baixada = 8
-    }
 }

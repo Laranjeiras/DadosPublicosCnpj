@@ -10,4 +10,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DadosPublicos.CNPJ2022.Dominio\DadosPublicos.CNPJ2022.Dominio.csproj" />
+  </ItemGroup>
 </Project>
